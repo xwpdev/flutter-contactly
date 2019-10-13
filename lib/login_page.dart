@@ -47,8 +47,8 @@ class LoginPage extends StatelessWidget {
         ),
         onPressed: () {
           // validate user and login
-          if (username.controller.text == 'admin' &&
-              password.controller.text == 'admin') {
+          if (username.controller.text == 'SysAdmin' &&
+              password.controller.text == 'Admin@123') {
             // add shared data
             _savePref(username.controller.text);
             Navigator.of(context).pushReplacementNamed(homePageTag);

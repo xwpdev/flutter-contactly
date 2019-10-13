@@ -1,10 +1,11 @@
-import 'package:contactly/home_page.dart';
-import 'package:contactly/login_page.dart';
-import 'package:contactly/register_page.dart';
-import 'package:contactly/register_success_page.dart';
+import './home_page.dart';
+import './login_page.dart';
+import './register_page.dart';
+import './register_success_page.dart';
 import 'package:flutter/material.dart';
 
 import './constants.dart';
+import 'add_new_page.dart';
 
 void main() => runApp(ContactlyApp());
 
@@ -15,7 +16,8 @@ class ContactlyApp extends StatelessWidget {
     loginPageTag: (context) => LoginPage(),
     homePageTag: (context) => HomePage(),
     registerPageTag: (context) => RegisterPage(),
-    registerSuccessTag: (context) => RegisterSuccessPage()
+    registerSuccessTag: (context) => RegisterSuccessPage(),
+    addNewVoterTag: (context) => AddNewPage()
   };
 
   @override
@@ -33,3 +35,4 @@ class ContactlyApp extends StatelessWidget {
 
 // https://www.appcoda.com/flutter-basics/
 // https://medium.com/@anilcan/forms-in-flutter-6e1364eafdb5
+// https://codingwithjoe.com/building-forms-with-flutter/

@@ -32,7 +32,9 @@ class _HomePageState extends State<HomePage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(addNewVoterTag);
+                },
                 padding: EdgeInsets.all(12),
                 color: appBtnDefaultColor,
                 child: Text(addNewEntryText,

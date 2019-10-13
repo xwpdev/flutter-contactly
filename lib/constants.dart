@@ -15,6 +15,16 @@ const registerSuccessText = "Registration Success / ලියාපදිංච�
 const registerSuccessButtonText = "Continue / ඉදිරියට යමු";
 const addNewEntryText = "Add New Entry / අලුතින් එකතු කරන්න";
 const homepageTitleText = "Welcome / සාදරයෙන් පිළිගනිමු";
+const addNewTitleText = "Add New Voter / නව ඡන්ද දායකයෙක්";
+
+const voterRegFirstName = "First Name / මුල් නම";
+const voterRegLastName = "Last Name / වාසගම";
+const voterRegAddress = "Address / ලිපිනය";
+const voterRegCity = "City / නගරය";
+const voterRegPollingCentre = "Polling Centre / ඡන්ද මධ්‍යස්ථානය";
+const voterRegEmail = "Email / විද්යුත් තැපැල් ලිපිනය";
+const voterRegPhone = "Contact No / දුරකථන අංකය";
+const voterRegConfirm = "Confirm / තහවුරු කරන්න";
 
 // Images
 Image appLogo = Image.asset('assets/logo.png');
@@ -28,3 +38,4 @@ const loginPageTag = 'Login Page';
 const homePageTag = 'Home Page';
 const registerPageTag = 'Register Page';
 const registerSuccessTag = 'Register Success Page';
+const addNewVoterTag = 'Add New Page';
