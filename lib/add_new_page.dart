@@ -140,7 +140,8 @@ class _AddNewPageState extends State {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text(addNewTitleText),
+        title: Text(addNewTitleText, style: TextStyle(color: appBarTextColor)),
+        backgroundColor: appBarColor,
       ),
       body: Form(
         key: _addVoterFormKey,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 // Colors
-Color appBgColor = Colors.white;
+Color appBgColor = Colors.blue[50];
+Color appBarColor = Colors.green;
+Color appBarTextColor = Colors.white;
 Color appBtnDefaultColor = Colors.lightGreen;
 Color appBtnSecondColor = Colors.grey;
 
@@ -9,6 +11,7 @@ Color appBtnSecondColor = Colors.grey;
 const appTitle = "Voter Register";
 const usernameHintText = "Email / විද්යුත් තැපැල් ලිපිනය";
 const passwordHintText = "Password / මුර පදය ";
+const fullNameHintText = "Full Name / සම්පූර්ණ නම ";
 const loginButtonText = "Login / ඇතුල් වන්න";
 const registerButtonText = "Register / ලියාපදිංචි වන්න";
 const registerSuccessText = "Registration Success / ලියාපදිංචිය සාර්ථකයි";
@@ -16,6 +19,7 @@ const registerSuccessButtonText = "Continue / ඉදිරියට යමු";
 const addNewEntryText = "Add New Entry / අලුතින් එකතු කරන්න";
 const homepageTitleText = "Welcome / සාදරයෙන් පිළිගනිමු";
 const addNewTitleText = "Add New Voter / නව ඡන්ද දායකයෙක්";
+const registerWithUsText = "Register With Us / අප හා සම්බන්ධ වන්න";
 
 const voterRegFirstName = "First Name / මුල් නම";
 const voterRegLastName = "Last Name / වාසගම";

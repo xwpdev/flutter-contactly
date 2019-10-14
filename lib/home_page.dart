@@ -19,7 +19,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: appBgColor,
       appBar: AppBar(
-        title: Text(homepageTitleText),
+        title:
+            Text(homepageTitleText, style: TextStyle(color: appBarTextColor)),
+        backgroundColor: appBarColor,
       ),
       body: Container(
         child: ListView(
