@@ -12,26 +12,28 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State {
   Voter _newVoter = new Voter();
+
   final List<DropdownMenuItem<String>> _cityList = [];
   final List<DropdownMenuItem<String>> _pollingCentreList = [];
-  // String _selectedCity;
-  // String _selectedPollingCentre;
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final _addVoterFormKey = GlobalKey<FormState>();
 
   void _loadCityData() {
     _cityList.clear();
     // load data from API
     _cityList.add(DropdownMenuItem(
-      value: "1",
+      value: "Colombo",
       child: Text("Colombo / කොළඹ"),
     ));
 
     _cityList.add(DropdownMenuItem(
-      value: "2",
+      value: "Kandy",
       child: Text("Kandy / මහනුවර"),
     ));
 
     _cityList.add(DropdownMenuItem(
-      value: "3",
+      value: "Kurunegala",
       child: Text("Kurunegala / කුරුණෑගල"),
     ));
   }
@@ -39,25 +41,24 @@ class _AddNewPageState extends State {
   void _loadPollingCentreData(String cityId) {
     _pollingCentreList.clear();
     _pollingCentreList.add(DropdownMenuItem(
-      value: "1",
+      value: "PC_1",
       child: Text("Polling Centre 01 / ඡන්ද මධ්‍යස්ථානය 01"),
     ));
 
     _pollingCentreList.add(DropdownMenuItem(
-      value: "2",
+      value: "PC_2",
       child: Text("Polling Centre 02 / ඡන්ද මධ්‍යස්ථානය 02"),
     ));
 
     _pollingCentreList.add(DropdownMenuItem(
-      value: "3",
+      value: "PC_3",
       child: Text("Polling Centre 03 / ඡන්ද මධ්‍යස්ථානය 03"),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    final _addVoterFormKey = GlobalKey<FormState>();
+    _newVoter.adminUserId = 1;
 
     _loadCityData();
 
@@ -130,7 +131,7 @@ class _AddNewPageState extends State {
         borderRadius: BorderRadius.circular(24),
       ),
       onPressed: () {
-        // Navigator.of(context).pushNamed(addNewVoterTag);
+        // push data to db
       },
       padding: EdgeInsets.all(12),
       color: appBtnDefaultColor,
