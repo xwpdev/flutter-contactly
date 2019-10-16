@@ -1,5 +1,6 @@
 class User {
   String username;
   String password;
-  String fullName;
+  String name;
+  String districtId;
 }

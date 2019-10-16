@@ -18,7 +18,6 @@ class LoginPage extends StatelessWidget {
     final username = TextFormField(
       controller: _userNameInputController,
       keyboardType: TextInputType.text,
-      autofocus: true,
       decoration: InputDecoration(
         hintText: usernameHintText,
       ),

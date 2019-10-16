@@ -14,8 +14,6 @@ class _AddNewPageState extends State {
   Voter _newVoter = new Voter();
   final List<DropdownMenuItem<String>> _cityList = [];
   final List<DropdownMenuItem<String>> _pollingCentreList = [];
-  // String _selectedCity;
-  // String _selectedPollingCentre;
 
   void _loadCityData() {
     _cityList.clear();
