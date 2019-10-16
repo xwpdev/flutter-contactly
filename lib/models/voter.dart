@@ -6,4 +6,5 @@ class Voter {
   String pollingCentre;
   String email = '';
   String phone = '';
+  int adminUserId;
 }
