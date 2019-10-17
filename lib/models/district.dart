@@ -4,7 +4,7 @@ class District {
 
   District(this.id, this.name);
 
-  factory District.fromJson(Map<String, dynamic> json) {
-    return District(json['id'], json['name']);
-  }
+  District.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'];
 }
