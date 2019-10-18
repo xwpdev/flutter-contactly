@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+
 import 'api.dart';
 import 'constants.dart';
 import 'models/user.dart';
@@ -19,25 +21,28 @@ class _RegisterPageState extends State<RegisterPage> {
   final _userNameInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
   final _fullNameInputController = TextEditingController();
-  List _cityList = List();
+  List<DropdownMenuItem<String>> _cityList = [];
   User _newUser = new User();
 
-  // Future<District> _fetchPost() async {
-  //   final response = await http
-  //       .get('https://datacollectorbackend.azurewebsites.net/district');
+  void _getHttp() async {
+    try {
+      Response response = await Dio()
+          .get("https://datacollectorbackend.azurewebsites.net/District");
+      _loadCityData(response.data["Data"]);
+    } catch (e) {
+      print(e);
+    }
+  }
 
-  //   return District.fromJson(json.decode(response.body));
-  // }
-
-  void _loadCityData() {
+  void _loadCityData(data) {
     _cityList.clear();
     // load data from API
 
-    API.getDistricts().then((response) {
-      setState(() {
-        _cityList = json.decode(response.body);
-      });
-    });
+    // API.getDistricts().then((response) {
+    //   setState(() {
+    //     _cityList = json.decode(response.body);
+    //   });
+    // });
 
     // _fetchPost().then((onValue) => print(onValue));
 
@@ -59,7 +64,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    _loadCityData();
+    // _loadCityData();
+    _getHttp();
 
     final username = TextFormField(
       controller: _userNameInputController,
@@ -99,13 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     final cityDropdown = DropdownButton<String>(
-      items: _cityList.map((item) {
-        print(item);
-        return new DropdownMenuItem(
-          child: new Text(item['name']),
-          value: item['id'].toString(),
-        );
-      }),
+      items: _cityList,
       onChanged: (String value) {
         setState(() {
           _newUser.districtId = value;
