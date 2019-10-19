@@ -19,7 +19,7 @@ const registerSuccessButtonText = "Continue / ඉදිරියට යමු";
 const addNewEntryText = "Add New Entry / අලුතින් එකතු කරන්න";
 const homepageTitleText = "Welcome / සාදරයෙන් පිළිගනිමු";
 const addNewTitleText = "Add New Voter / නව ඡන්ද දායකයෙක්";
-const registerWithUsText = "Register With Us / අප හා සම්බන්ධ වන්න";
+const registerWithUsText = "Register Now / අප හා සම්බන්ධ වන්න";
 
 const voterRegFirstName = "First Name / මුල් නම";
 const voterRegLastName = "Last Name / වාසගම";

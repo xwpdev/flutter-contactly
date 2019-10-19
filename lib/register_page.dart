@@ -1,7 +1,9 @@
+import 'package:VoterRegister/models/district.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 import 'constants.dart';
+import 'models/response.dart';
 import 'models/user.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,56 +17,43 @@ class _RegisterPageState extends State<RegisterPage> {
   final _userNameInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
   final _fullNameInputController = TextEditingController();
+
   List<DropdownMenuItem<String>> _cityList = [];
-  List _data = new List();
   User _newUser = new User();
 
   void _getHttp() async {
     try {
-      print("api call");
       // load data from API
       Response resp = await Dio()
           .get("https://datacollectorbackend.azurewebsites.net/District");
       setState(() {
-        print('setState');
-        _data = resp.data[2];
-        _loadCityData();
+        CustomResponse d = CustomResponse.fromJson(resp.data);
+        _loadCityData(d.data);
       });
     } catch (e) {}
   }
 
-  void _loadCityData() {
-    print('loadCityData');
+  void _loadCityData(List data) {
     _cityList.clear();
-    print(_data);
-    for (var i = 0; i < _data.length; i++) {
-      _cityList.add(DropdownMenuItem(
-        value: _data[i].id,
-        child: Text(_data[i].name),
-      ));
+    if (data != null) {
+      for (var i = 0; i < data.length; i++) {
+        District tempDistrict = District.fromJson(data[i]);
+        _cityList.add(DropdownMenuItem(
+          value: tempDistrict.id.toString(),
+          child: Text(tempDistrict.name),
+        ));
+      }
     }
+  }
 
-    // _cityList.add(DropdownMenuItem(
-    //   value: "1",
-    //   child: Text("Colombo / කොළඹ"),
-    // ));
-
-    // _cityList.add(DropdownMenuItem(
-    //   value: "2",
-    //   child: Text("Kandy / මහනුවර"),
-    // ));
-
-    // _cityList.add(DropdownMenuItem(
-    //   value: "3",
-    //   child: Text("Kurunegala / කුරුණෑගල"),
-    // ));
+  @override
+  initState() {
+    super.initState();
+    _getHttp();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getHttp();
-    // _loadCityData();
-
     final username = TextFormField(
       controller: _userNameInputController,
       keyboardType: TextInputType.text,
