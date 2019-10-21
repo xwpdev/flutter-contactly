@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:VoterRegister/models/district.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 import 'constants.dart';
-import 'models/response.dart';
+import 'models/custom_response.dart';
 import 'models/user.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,18 +16,15 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _userNameInputController = TextEditingController();
-  final _passwordInputController = TextEditingController();
-  final _fullNameInputController = TextEditingController();
+  final _regiterUserFormKey = GlobalKey<FormState>();
 
   List<DropdownMenuItem<String>> _cityList = [];
   User _newUser = new User();
 
-  void _getHttp() async {
+  void _getData() async {
     try {
       // load data from API
-      Response resp = await Dio()
-          .get("https://datacollectorbackend.azurewebsites.net/District");
+      Response resp = await Dio().get("$apiUrl/District");
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
         _loadCityData(d.data);
@@ -46,16 +45,21 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  Future<CustomResponse> _postData() async {
+    var resp =
+        await Dio().post("$apiUrl/Register", data: json.encode(_newUser));
+    return CustomResponse.fromJson(resp.data);
+  }
+
   @override
   initState() {
     super.initState();
-    _getHttp();
+    _getData();
   }
 
   @override
   Widget build(BuildContext context) {
     final username = TextFormField(
-      controller: _userNameInputController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: usernameHintText,
@@ -63,12 +67,13 @@ class _RegisterPageState extends State<RegisterPage> {
       style: TextStyle(
         color: Colors.black,
       ),
-      onSaved: (value) => _newUser.username,
+      onSaved: (value) {
+        _newUser.username = value;
+      },
     );
 
     final password = TextFormField(
       obscureText: true,
-      controller: _passwordInputController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: passwordHintText,
@@ -76,11 +81,12 @@ class _RegisterPageState extends State<RegisterPage> {
       style: TextStyle(
         color: Colors.black,
       ),
-      onSaved: (value) => _newUser.password,
+      onSaved: (value) {
+        _newUser.password = value;
+      },
     );
 
     final name = TextFormField(
-      controller: _fullNameInputController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: fullNameHintText,
@@ -88,7 +94,9 @@ class _RegisterPageState extends State<RegisterPage> {
       style: TextStyle(
         color: Colors.black,
       ),
-      onSaved: (value) => _newUser.name,
+      onSaved: (value) {
+        _newUser.name = value;
+      },
     );
 
     final cityDropdown = DropdownButton<String>(
@@ -110,7 +118,15 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(registerSuccessTag);
+          _regiterUserFormKey.currentState.save();
+          _postData().then((data) => {
+                if (data.code == 100)
+                  {Navigator.of(context).pushNamed(registerSuccessTag)}
+                else
+                  {
+                    // show error message
+                  }
+              });
         },
         padding: EdgeInsets.all(12),
         color: appBtnDefaultColor,
@@ -119,27 +135,29 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     return Scaffold(
-      backgroundColor: appBgColor,
-      appBar: AppBar(
-        title:
-            Text(registerWithUsText, style: TextStyle(color: appBarTextColor)),
-        backgroundColor: appBarColor,
-      ),
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            SizedBox(height: buttonHeight),
-            cityDropdown,
-            username,
-            password,
-            name,
-            SizedBox(height: buttonHeight),
-            registerButton
-          ],
+        backgroundColor: appBgColor,
+        appBar: AppBar(
+          title: Text(registerWithUsText,
+              style: TextStyle(color: appBarTextColor)),
+          backgroundColor: appBarColor,
         ),
-      ),
-    );
+        body: Form(
+          key: _regiterUserFormKey,
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+              children: <Widget>[
+                SizedBox(height: buttonHeight),
+                cityDropdown,
+                username,
+                password,
+                name,
+                SizedBox(height: buttonHeight),
+                registerButton
+              ],
+            ),
+          ),
+        ));
   }
 }

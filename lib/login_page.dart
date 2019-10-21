@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
           if (username.controller.text == 'SysAdmin' &&
               password.controller.text == 'Admin@123') {
             // add shared data
-            _savePref(username.controller.text);
+            _savePref(username.controller.text, "user_key");
             Navigator.of(context).pushReplacementNamed(homePageTag);
           }
         },
@@ -94,9 +94,9 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _savePref(String username) async {
+  void _savePref(String username, String userKey) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'user_key';
+    final key = userKey;
     final value = username;
     prefs.setString(key, value);
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// API
+const apiUrl = "https://datacollectorbackend.azurewebsites.net";
+
 // Colors
 Color appBgColor = Colors.blue[50];
 Color appBarColor = Colors.green;
@@ -31,15 +34,15 @@ const voterRegPhone = "Contact No / දුරකථන අංකය";
 const voterRegConfirm = "Confirm / තහවුරු කරන්න";
 
 // Images
-Image appLogo = Image.asset('assets/logo.png');
+Image appLogo = Image.asset("assets/logo.png");
 
 // Sizes
 const bigRadius = 72.0;
 const buttonHeight = 24.0;
 
 // Pages
-const loginPageTag = 'Login Page';
-const homePageTag = 'Home Page';
-const registerPageTag = 'Register Page';
-const registerSuccessTag = 'Register Success Page';
-const addNewVoterTag = 'Add New Page';
+const loginPageTag = "Login Page";
+const homePageTag = "Home Page";
+const registerPageTag = "Register Page";
+const registerSuccessTag = "Register Success Page";
+const addNewVoterTag = "Add New Page";
