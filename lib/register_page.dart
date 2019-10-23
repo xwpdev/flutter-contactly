@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:VoterRegister/models/district.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:toast/toast.dart';
 
 import 'constants.dart';
 import 'models/custom_response.dart';
@@ -121,10 +122,13 @@ class _RegisterPageState extends State<RegisterPage> {
           _regiterUserFormKey.currentState.save();
           _postData().then((data) => {
                 if (data.code == 100)
-                  {Navigator.of(context).pushNamed(registerSuccessTag)}
+                  {
+                    Navigator.of(context).pushNamed(registerSuccessTag)}
                 else
                   {
                     // show error message
+                    Toast.show(data.message, context,
+                        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM)
                   }
               });
         },

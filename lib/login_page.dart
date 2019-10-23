@@ -1,11 +1,22 @@
+import 'dart:convert';
+
+import 'package:VoterRegister/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 import './constants.dart';
+import 'models/custom_response.dart';
 
 class LoginPage extends StatelessWidget {
   final _userNameInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
+
+  _loginUser(userData) async {
+    var resp =
+        await Dio().post("$apiUrl/Register", data: json.encode(userData));
+    return CustomResponse.fromJson(resp.data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +57,13 @@ class LoginPage extends StatelessWidget {
         ),
         onPressed: () {
           // validate user and login
-          if (username.controller.text == 'SysAdmin' &&
-              password.controller.text == 'Admin@123') {
-            // add shared data
+          var tempUser = new User();
+          tempUser.username = username.controller.text;
+          tempUser.password = password.controller.text;
+          _loginUser(tempUser).then((resp) => {
             _savePref(username.controller.text, "user_key");
-            Navigator.of(context).pushReplacementNamed(homePageTag);
-          }
+          Navigator.of(context).pushReplacementNamed(homePageTag);
+          });          
         },
         padding: EdgeInsets.all(12),
         color: appBtnDefaultColor,
