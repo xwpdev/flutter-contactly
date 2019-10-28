@@ -28,10 +28,11 @@ const voterRegFirstName = "First Name / මුල් නම";
 const voterRegLastName = "Last Name / වාසගම";
 const voterRegAddress = "Address / ලිපිනය";
 const voterRegCity = "City / නගරය";
-const voterRegPollingCentre = "Polling Centre / ඡන්ද මධ්‍යස්ථානය";
+const voterRegPollingCentre = "Polling Center / ඡන්ද මධ්‍යස්ථානය";
 const voterRegEmail = "Email / විද්යුත් තැපැල් ලිපිනය";
 const voterRegPhone = "Contact No / දුරකථන අංකය";
 const voterRegConfirm = "Confirm / තහවුරු කරන්න";
+const voterRegSubmit = "Submit / ඉදිරිපත් කරන්න";
 
 // Images
 Image appLogo = Image.asset("assets/logo.png");

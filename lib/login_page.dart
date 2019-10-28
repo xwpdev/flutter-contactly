@@ -4,6 +4,7 @@ import 'package:VoterRegister/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
+import 'package:toast/toast.dart';
 
 import './constants.dart';
 import 'models/custom_response.dart';
@@ -13,15 +14,14 @@ class LoginPage extends StatelessWidget {
   final _passwordInputController = TextEditingController();
 
   _loginUser(userData) async {
-    var resp =
-        await Dio().post("$apiUrl/Register", data: json.encode(userData));
+    var resp = await Dio().post("$apiUrl/Login", data: json.encode(userData));
     return CustomResponse.fromJson(resp.data);
   }
 
   @override
   Widget build(BuildContext context) {
     final logo = CircleAvatar(
-      backgroundColor: Colors.lime,
+      backgroundColor: Colors.lime[50],
       radius: bigRadius,
       child: appLogo,
     );
@@ -60,10 +60,15 @@ class LoginPage extends StatelessWidget {
           var tempUser = new User();
           tempUser.username = username.controller.text;
           tempUser.password = password.controller.text;
-          _loginUser(tempUser).then((resp) => {
-            _savePref(username.controller.text, "user_key");
-          Navigator.of(context).pushReplacementNamed(homePageTag);
-          });          
+          _loginUser(tempUser).then((resp) {
+            if (resp.code == 100) {
+              _savePref(resp.data.toString(), "user_key");
+              Navigator.of(context).pushReplacementNamed(homePageTag);
+            } else {
+              Toast.show(resp.message, context,
+                  duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+            }
+          });
         },
         padding: EdgeInsets.all(12),
         color: appBtnDefaultColor,

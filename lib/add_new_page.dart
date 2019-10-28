@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'add_new_confirm_page.dart';
 import 'constants.dart';
+import 'models/custom_response.dart';
 import 'models/voter.dart';
 
 class AddNewPage extends StatefulWidget {
@@ -12,55 +17,38 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State {
   Voter _newVoter = new Voter();
-
-  final List<DropdownMenuItem<String>> _cityList = [];
-  final List<DropdownMenuItem<String>> _pollingCentreList = [];
+  List cityData = [];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final _addVoterFormKey = GlobalKey<FormState>();
+  int _adminUserId;
 
-  void _loadCityData() {
-    _cityList.clear();
-    // load data from API
-    _cityList.add(DropdownMenuItem(
-      value: "Colombo",
-      child: Text("Colombo / කොළඹ"),
-    ));
-
-    _cityList.add(DropdownMenuItem(
-      value: "Kandy",
-      child: Text("Kandy / මහනුවර"),
-    ));
-
-    _cityList.add(DropdownMenuItem(
-      value: "Kurunegala",
-      child: Text("Kurunegala / කුරුණෑගල"),
-    ));
+  void _getSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    _adminUserId = int.parse(prefs.getString("user_key"));
   }
 
-  void _loadPollingCentreData(String cityId) {
-    _pollingCentreList.clear();
-    _pollingCentreList.add(DropdownMenuItem(
-      value: "PC_1",
-      child: Text("Polling Centre 01 / ඡන්ද මධ්‍යස්ථානය 01"),
-    ));
+  void _getData() async {
+    try {
+      _getSharedPref();
+      // load data from API
+      Response resp = await Dio().get("$apiUrl/District");
+      setState(() {
+        CustomResponse d = CustomResponse.fromJson(resp.data);
+        cityData.addAll(d.data);
+      });
+    } catch (e) {}
+  }
 
-    _pollingCentreList.add(DropdownMenuItem(
-      value: "PC_2",
-      child: Text("Polling Centre 02 / ඡන්ද මධ්‍යස්ථානය 02"),
-    ));
-
-    _pollingCentreList.add(DropdownMenuItem(
-      value: "PC_3",
-      child: Text("Polling Centre 03 / ඡන්ද මධ්‍යස්ථානය 03"),
-    ));
+  @override
+  initState() {
+    super.initState();
+    _getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    _newVoter.adminUserId = 1;
-
-    _loadCityData();
+    _newVoter.adminUserId = _adminUserId;
 
     final firstNameText = TextFormField(
       keyboardType: TextInputType.text,
@@ -87,29 +75,41 @@ class _AddNewPageState extends State {
       onSaved: (value) => _newVoter.address = value,
     );
 
-    final cityDropdown = DropdownButton<String>(
-      items: _cityList,
-      onChanged: (String value) {
-        _loadPollingCentreData(value);
+    final cityDropdown = DropdownButton(
+      items: cityData
+          .map((f) => DropdownMenuItem(
+                value: f["id"],
+                child: Text(f["name"]),
+              ))
+          .toList(),
+      onChanged: (value) {
         setState(() {
-          _newVoter.city = value;
+          _newVoter.cityId = value;
+          var tempCity = cityData.firstWhere((c) => c["id"] == value);
+          _newVoter.cityName = tempCity["name"];
         });
       },
       hint: Text(voterRegCity),
       isExpanded: true,
-      value: _newVoter.city,
+      value: _newVoter.cityId,
     );
 
-    final pollingCentreDropdown = DropdownButton<String>(
-      items: _pollingCentreList,
-      onChanged: (String value) {
-        setState(() {
-          _newVoter.pollingCentre = value;
-        });
-      },
-      hint: Text(voterRegPollingCentre),
-      isExpanded: true,
-      value: _newVoter.pollingCentre,
+    // final pollingCentreDropdown = DropdownButton<String>(
+    //   items: _pollingCentreList,
+    //   onChanged: (String value) {
+    //     setState(() {
+    //       _newVoter.pollingCentre = value;
+    //     });
+    //   },
+    //   hint: Text(voterRegPollingCentre),
+    //   isExpanded: true,
+    //   value: _newVoter.pollingCentre,
+    // );
+
+    final pollingStationText = TextFormField(
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(hintText: voterRegPollingCentre),
+      onSaved: (value) => _newVoter.pollingCentre = value,
     );
 
     final phoneText = TextFormField(
@@ -131,7 +131,13 @@ class _AddNewPageState extends State {
         borderRadius: BorderRadius.circular(24),
       ),
       onPressed: () {
-        // push data to db
+        _addVoterFormKey.currentState.save();
+        if (_newVoter != null) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddNewConfirmPage(_newVoter)));
+        }
       },
       padding: EdgeInsets.all(12),
       color: appBtnDefaultColor,
@@ -151,7 +157,7 @@ class _AddNewPageState extends State {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             cityDropdown,
-            pollingCentreDropdown,
+            pollingStationText,
             firstNameText,
             lastNameText,
             addressText,

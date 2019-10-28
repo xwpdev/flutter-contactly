@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:VoterRegister/models/district.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:toast/toast.dart';
 
@@ -18,9 +18,16 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _regiterUserFormKey = GlobalKey<FormState>();
+  List cityData = [];
 
-  List<DropdownMenuItem<String>> _cityList = [];
   User _newUser = new User();
+
+  void _savePref(String username, String userKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = userKey;
+    final value = username;
+    prefs.setString(key, value);
+  }
 
   void _getData() async {
     try {
@@ -28,22 +35,10 @@ class _RegisterPageState extends State<RegisterPage> {
       Response resp = await Dio().get("$apiUrl/District");
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
-        _loadCityData(d.data);
+        // _loadCityData(d.data);
+        cityData.addAll(d.data);
       });
     } catch (e) {}
-  }
-
-  void _loadCityData(List data) {
-    _cityList.clear();
-    if (data != null) {
-      for (var i = 0; i < data.length; i++) {
-        District tempDistrict = District.fromJson(data[i]);
-        _cityList.add(DropdownMenuItem(
-          value: tempDistrict.id.toString(),
-          child: Text(tempDistrict.name),
-        ));
-      }
-    }
   }
 
   Future<CustomResponse> _postData() async {
@@ -100,9 +95,14 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
 
-    final cityDropdown = DropdownButton<String>(
-      items: _cityList,
-      onChanged: (String value) {
+    final cityDropdown = DropdownButton(
+      items: cityData
+          .map((f) => DropdownMenuItem(
+                value: f["id"],
+                child: Text(f["name"]),
+              ))
+          .toList(),
+      onChanged: (value) {
         setState(() {
           _newUser.districtId = value;
         });
@@ -120,17 +120,15 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         onPressed: () {
           _regiterUserFormKey.currentState.save();
-          _postData().then((data) => {
-                if (data.code == 100)
-                  {
-                    Navigator.of(context).pushNamed(registerSuccessTag)}
-                else
-                  {
-                    // show error message
-                    Toast.show(data.message, context,
-                        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM)
-                  }
-              });
+          _postData().then((resp) {
+            Toast.show(resp.message, context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+            if (resp.code == 100) {
+              // save in savePref
+              _savePref(resp.data.toString(), "user_key");
+              Navigator.of(context).pushNamed(registerSuccessTag);
+            }
+          });
         },
         padding: EdgeInsets.all(12),
         color: appBtnDefaultColor,

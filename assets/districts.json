@@ -1,0 +1,94 @@
+{
+    "Code": 100,
+    "Message": "",
+    "Data": [
+        {
+            "id": 1,
+            "name": "Colombo"
+        },
+        {
+            "id": 2,
+            "name": "Ampara"
+        },
+        {
+            "id": 3,
+            "name": "Anuradhapura"
+        },
+        {
+            "id": 4,
+            "name": "Badulla"
+        },
+        {
+            "id": 5,
+            "name": "Batticaloa"
+        },
+        {
+            "id": 6,
+            "name": "Galle"
+        },
+        {
+            "id": 7,
+            "name": "Gampaha"
+        },
+        {
+            "id": 8,
+            "name": "Hambantota"
+        },
+        {
+            "id": 9,
+            "name": "Hambantota"
+        },
+        {
+            "id": 10,
+            "name": "Kalutara"
+        },
+        {
+            "id": 11,
+            "name": "Kandy"
+        },
+        {
+            "id": 12,
+            "name": "Kegalle"
+        },
+        {
+            "id": 13,
+            "name": "Kurunegala"
+        },
+        {
+            "id": 14,
+            "name": "Matale"
+        },
+        {
+            "id": 15,
+            "name": "Matara"
+        },
+        {
+            "id": 16,
+            "name": "Monaragala"
+        },
+        {
+            "id": 17,
+            "name": "Nuwara Eliya"
+        },
+        {
+            "id": 18,
+            "name": "Polonnaruwa"
+        },
+        {
+            "id": 19,
+            "name": "Puttalam"
+        },
+        {
+            "id": 20,
+            "name": "Ratnapura"
+        },
+        {
+            "id": 21,
+            "name": "Trincomalee"
+        },
+        {
+            "id": 22,
+            "name": "Vanni"
+        }
+    ]
+}
