@@ -94,10 +94,16 @@ class AddNewConfirmPage extends StatelessWidget {
               onPressed: () {
                 // push data to db
                 _addVoter(_voterData).then((resp) {
-                  Toast.show(resp.message, context,
-                      duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                  Toast.show(
+                      resp.message != null
+                          ? resp.message
+                          : 'Added Successfully!',
+                      context,
+                      duration: Toast.LENGTH_SHORT,
+                      gravity: Toast.BOTTOM);
                   if (resp.code == 100) {
-                    Navigator.of(context).pushReplacementNamed(homePageTag);
+                    Navigator.popUntil(
+                        context, ModalRoute.withName(homePageTag));
                   }
                 });
               },

@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (resp.code == 100) {
               // save in savePref
               _savePref(resp.data.toString(), "user_key");
-              Navigator.of(context).pushNamed(registerSuccessTag);
+              Navigator.of(context).pushReplacementNamed(registerSuccessTag);
             }
           });
         },
