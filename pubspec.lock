@@ -76,13 +76,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_datetime_picker:
-    dependency: "direct dev"
-    description:
-      name: flutter_datetime_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -157,7 +150,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4+1"
+    version: "0.5.4+3"
   sky_engine:
     dependency: transitive
     description: flutter

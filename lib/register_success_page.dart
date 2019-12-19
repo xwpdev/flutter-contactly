@@ -22,7 +22,7 @@ class RegisterSuccessPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(homePageTag);
+                  Navigator.of(context).popAndPushNamed(homePageTag);
                 },
                 padding: EdgeInsets.all(12),
                 color: appBtnDefaultColor,
