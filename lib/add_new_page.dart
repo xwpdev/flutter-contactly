@@ -94,6 +94,12 @@ class _AddNewPageState extends State {
       value: _newVoter.cityId,
     );
 
+    final postalCodeText = TextFormField(
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(hintText: voterRegPostalCode),
+      onSaved: (value) => _newVoter.postalCode = value,
+    );
+
     // final pollingCentreDropdown = DropdownButton<String>(
     //   items: _pollingCentreList,
     //   onChanged: (String value) {
@@ -105,6 +111,12 @@ class _AddNewPageState extends State {
     //   isExpanded: true,
     //   value: _newVoter.pollingCentre,
     // );
+
+    final pollingDivisionText = TextFormField(
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(hintText: voterRegPollingDivision),
+      onSaved: (value) => _newVoter.pollingDivision = value,
+    );
 
     final pollingStationText = TextFormField(
       keyboardType: TextInputType.text,
@@ -157,6 +169,8 @@ class _AddNewPageState extends State {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             cityDropdown,
+            postalCodeText,
+            pollingDivisionText,
             pollingStationText,
             firstNameText,
             lastNameText,

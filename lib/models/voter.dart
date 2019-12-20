@@ -4,6 +4,8 @@ class Voter {
   String address;
   int cityId;
   String cityName;
+  String postalCode;
+  String pollingDivision;
   String pollingCentre;
   String email = '';
   String phone = '';
@@ -17,6 +19,8 @@ class Voter {
       'lastName': instance.lastName,
       'address': instance.address,
       'city': instance.cityId.toString(),
+      'postalCode': instance.postalCode,
+      'pollingDivision': instance.pollingDivision,
       'pollingCentre': instance.pollingCentre,
       'email': instance.email,
       'phone': instance.phone,
