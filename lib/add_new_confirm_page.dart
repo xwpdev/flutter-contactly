@@ -24,7 +24,7 @@ class AddNewConfirmPage extends StatelessWidget {
         backgroundColor: appBarColor,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
             Table(
@@ -59,6 +59,22 @@ class AddNewConfirmPage extends StatelessWidget {
                   ),
                   Text(
                     _voterData.cityName,
+                  )
+                ]),
+                TableRow(children: <Widget>[
+                  Text(
+                    voterRegPostalCode,
+                  ),
+                  Text(
+                    _voterData.postalCode,
+                  )
+                ]),
+                TableRow(children: <Widget>[
+                  Text(
+                    voterRegPollingDivision,
+                  ),
+                  Text(
+                    _voterData.pollingDivision,
                   )
                 ]),
                 TableRow(children: <Widget>[

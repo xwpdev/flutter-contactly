@@ -5,13 +5,14 @@ const apiUrl = "https://datacollectorbackend.azurewebsites.net";
 
 // Colors
 Color appBgColor = Colors.blue[50];
-Color appBarColor = Colors.red;
+Color appBarColor = Colors.blue[800];
 Color appBarTextColor = Colors.white;
 Color appBtnDefaultColor = Colors.blue[300];
 Color appBtnSecondColor = Colors.orange[300];
+Color labelColor = Colors.black54;
 
 // Strings
-const appTitle = "Voter Register";
+const appTitle = "මනුස්සකම";
 const usernameHintText = "Email / විද්යුත් තැපැල් ලිපිනය";
 const passwordHintText = "Password / මුර පදය ";
 const fullNameHintText = "Full Name / සම්පූර්ණ නම ";
@@ -24,15 +25,15 @@ const homepageTitleText = "Welcome / සාදරයෙන් පිළිගන
 const addNewTitleText = "Add New Voter / නව ඡන්ද දායකයෙක්";
 const registerWithUsText = "Register Now / අප හා සම්බන්ධ වන්න";
 
-const voterRegFirstName = "First Name / මුල් නම";
+const voterRegFirstName = "First Name / මුල් නම*";
 const voterRegLastName = "Last Name / වාසගම";
-const voterRegAddress = "Address / ලිපිනය";
+const voterRegAddress = "Address / ලිපිනය*";
 const voterRegCity = "City / නගරය";
 const voterRegPostalCode = "Postal Code / තැපැල් කේතය";
 const voterRegPollingDivision = "Polling Divison / ආසනය";
 const voterRegPollingCentre = "Polling Center / ඡන්ද මධ්‍යස්ථානය";
-const voterRegEmail = "Email / විද්යුත් තැපැල් ලිපිනය";
-const voterRegPhone = "Contact No / දුරකථන අංකය";
+const voterRegEmail = "Email / විද්යුත් තැපැල් ලිපිනය*";
+const voterRegPhone = "Contact No / දුරකථන අංකය*";
 const voterRegConfirm = "Confirm / තහවුරු කරන්න";
 const voterRegSubmit = "Submit / ඉදිරිපත් කරන්න";
 

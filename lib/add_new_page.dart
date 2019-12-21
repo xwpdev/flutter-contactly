@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 import 'add_new_confirm_page.dart';
 import 'constants.dart';
@@ -53,16 +54,16 @@ class _AddNewPageState extends State {
     final firstNameText = TextFormField(
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: voterRegFirstName,
-      ),
+          labelText: voterRegFirstName,
+          labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.firstName = value,
     );
 
     final lastNameText = TextFormField(
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: voterRegLastName,
-      ),
+          labelText: voterRegLastName,
+          labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.lastName = value,
     );
 
@@ -70,8 +71,7 @@ class _AddNewPageState extends State {
       maxLines: 3,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: voterRegAddress,
-      ),
+          labelText: voterRegAddress, labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.address = value,
     );
 
@@ -90,13 +90,16 @@ class _AddNewPageState extends State {
         });
       },
       hint: Text(voterRegCity),
+      focusColor: labelColor,
       isExpanded: true,
       value: _newVoter.cityId,
     );
 
     final postalCodeText = TextFormField(
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(hintText: voterRegPostalCode),
+      decoration: InputDecoration(
+          labelText: voterRegPostalCode,
+          labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.postalCode = value,
     );
 
@@ -114,27 +117,31 @@ class _AddNewPageState extends State {
 
     final pollingDivisionText = TextFormField(
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(hintText: voterRegPollingDivision),
+      decoration: InputDecoration(
+          labelText: voterRegPollingDivision,
+          labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.pollingDivision = value,
     );
 
     final pollingStationText = TextFormField(
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(hintText: voterRegPollingCentre),
+      decoration: InputDecoration(
+          labelText: voterRegPollingCentre,
+          labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.pollingCentre = value,
     );
 
     final phoneText = TextFormField(
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-        hintText: voterRegPhone,
-      ),
+          labelText: voterRegPhone, labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.phone = value,
     );
 
     final emailText = TextFormField(
       keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(hintText: voterRegEmail),
+      decoration: InputDecoration(
+          labelText: voterRegEmail, labelStyle: TextStyle(color: labelColor)),
       onSaved: (value) => _newVoter.email = value,
     );
 
@@ -149,6 +156,9 @@ class _AddNewPageState extends State {
               context,
               MaterialPageRoute(
                   builder: (context) => AddNewConfirmPage(_newVoter)));
+        } else {
+          Toast.show("Please Enter All Required Fields", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
         }
       },
       padding: EdgeInsets.all(12),
@@ -168,15 +178,15 @@ class _AddNewPageState extends State {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
+            firstNameText,
+            lastNameText,
+            emailText,
+            phoneText,
+            addressText,
             cityDropdown,
             postalCodeText,
             pollingDivisionText,
             pollingStationText,
-            firstNameText,
-            lastNameText,
-            addressText,
-            emailText,
-            phoneText,
             SizedBox(height: buttonHeight),
             confirmButton
           ],

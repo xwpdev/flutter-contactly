@@ -58,8 +58,8 @@ class _RegisterPageState extends State<RegisterPage> {
     final username = TextFormField(
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: usernameHintText,
-      ),
+          labelText: usernameHintText,
+          labelStyle: TextStyle(color: labelColor)),
       style: TextStyle(
         color: Colors.black,
       ),
@@ -72,8 +72,8 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: true,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: passwordHintText,
-      ),
+          labelText: passwordHintText,
+          labelStyle: TextStyle(color: labelColor)),
       style: TextStyle(
         color: Colors.black,
       ),
@@ -85,8 +85,8 @@ class _RegisterPageState extends State<RegisterPage> {
     final name = TextFormField(
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: fullNameHintText,
-      ),
+          labelText: fullNameHintText,
+          labelStyle: TextStyle(color: labelColor)),
       style: TextStyle(
         color: Colors.black,
       ),
@@ -151,10 +151,10 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: EdgeInsets.only(left: 24.0, right: 24.0),
               children: <Widget>[
                 SizedBox(height: buttonHeight),
-                cityDropdown,
+                name,
                 username,
                 password,
-                name,
+                cityDropdown,
                 SizedBox(height: buttonHeight),
                 registerButton
               ],

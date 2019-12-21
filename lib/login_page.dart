@@ -30,8 +30,8 @@ class LoginPage extends StatelessWidget {
       controller: _userNameInputController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: usernameHintText,
-      ),
+          labelText: usernameHintText,
+          labelStyle: TextStyle(color: labelColor)),
       style: TextStyle(
         color: Colors.black,
       ),
@@ -42,8 +42,8 @@ class LoginPage extends StatelessWidget {
       controller: _passwordInputController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: passwordHintText,
-      ),
+          labelText: passwordHintText,
+          labelStyle: TextStyle(color: labelColor)),
       style: TextStyle(
         color: Colors.black,
       ),
@@ -57,18 +57,25 @@ class LoginPage extends StatelessWidget {
         ),
         onPressed: () {
           // validate user and login
-          var tempUser = new User();
-          tempUser.username = username.controller.text;
-          tempUser.password = password.controller.text;
-          _loginUser(tempUser).then((resp) {
-            if (resp.code == 100) {
-              _savePref(resp.data.toString(), "user_key");
-              Navigator.of(context).pushReplacementNamed(homePageTag);
-            } else {
-              Toast.show(resp.message, context,
-                  duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-            }
-          });
+          if (username.controller.text != "" &&
+              password.controller.text != "") {
+            var tempUser = new User();
+            tempUser.username = username.controller.text;
+            tempUser.password = password.controller.text;
+
+            _loginUser(tempUser).then((resp) {
+              if (resp.code == 100) {
+                _savePref(resp.data.toString(), "user_key");
+                Navigator.of(context).pushReplacementNamed(homePageTag);
+              } else {
+                Toast.show(resp.message, context,
+                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+              }
+            });
+          } else {
+            Toast.show("Login Error", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          }
         },
         padding: EdgeInsets.all(12),
         color: appBtnDefaultColor,
