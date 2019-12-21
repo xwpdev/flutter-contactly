@@ -5,10 +5,10 @@ const apiUrl = "https://datacollectorbackend.azurewebsites.net";
 
 // Colors
 Color appBgColor = Colors.blue[50];
-Color appBarColor = Colors.green;
+Color appBarColor = Colors.red;
 Color appBarTextColor = Colors.white;
-Color appBtnDefaultColor = Colors.lightGreen;
-Color appBtnSecondColor = Colors.grey;
+Color appBtnDefaultColor = Colors.blue[300];
+Color appBtnSecondColor = Colors.orange[300];
 
 // Strings
 const appTitle = "Voter Register";
