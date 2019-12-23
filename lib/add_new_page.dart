@@ -46,7 +46,8 @@ class _AddNewPageState extends State {
   void _getPollingDivisionData(districtId) async {
     try {
       // load data from API
-      Response resp = await Dio().get("$apiUrl/PollingDivision/" + districtId);
+      Response resp =
+          await Dio().get("$apiUrl/PollingDivision/" + districtId.toString());
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
         pollingDivisonData.addAll(d.data);
@@ -57,7 +58,8 @@ class _AddNewPageState extends State {
   void _getPollingCentreData(divisonId) async {
     try {
       // load data from API
-      Response resp = await Dio().get("$apiUrl/PollingCentre/" + divisonId);
+      Response resp =
+          await Dio().get("$apiUrl/PollingCentre/" + divisonId.toString());
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
         pollingCentreData.addAll(d.data);
@@ -82,6 +84,15 @@ class _AddNewPageState extends State {
     _getSharedPref();
     _getDistrictData();
     _getPostOfficeData();
+  }
+
+  void _onSelectedState(value) {
+    _getPollingDivisionData(value);
+    setState(() {
+      _newVoter.districtId = value;
+      var tempDistrict = districtData.firstWhere((c) => c["id"] == value);
+      _newVoter.districtName = tempDistrict["name"];
+    });
   }
 
   @override
@@ -119,14 +130,7 @@ class _AddNewPageState extends State {
                 child: Text(f["name"]),
               ))
           .toList(),
-      onChanged: (value) {
-        setState(() {
-          _newVoter.districtId = value;
-          var tempDistrict = districtData.firstWhere((c) => c["id"] == value);
-          _newVoter.districtName = tempDistrict["name"];
-        });
-        _getPollingDivisionData(value);
-      },
+      onChanged: (value) => _onSelectedState(value),
       hint: Text(voterRegCity),
       focusColor: labelColor,
       isExpanded: true,
@@ -137,7 +141,7 @@ class _AddNewPageState extends State {
       items: postOfficeData
           .map((f) => DropdownMenuItem(
                 value: f["id"],
-                child: Text(f["name"] + '/' + f["postalCode"]),
+                child: Text(f["name"] + ' / ' + f["postalCode"]),
               ))
           .toList(),
       onChanged: (value) {
@@ -164,6 +168,9 @@ class _AddNewPageState extends State {
       onChanged: (value) {
         setState(() {
           _newVoter.pollingDivisionId = value;
+          var tempPollingDivision =
+              pollingDivisonData.firstWhere((c) => c["id"] == value);
+          _newVoter.pollingDivisionName = tempPollingDivision["name"];
           _getPollingCentreData(value);
         });
       },
@@ -183,9 +190,12 @@ class _AddNewPageState extends State {
       onChanged: (value) {
         setState(() {
           _newVoter.pollingCentreId = value;
+          var tempPollingCentre =
+              pollingCentreData.firstWhere((c) => c["id"] == value);
+          _newVoter.pollingCentreName = tempPollingCentre["name"];
         });
       },
-      hint: Text(voterRegPostalCode),
+      hint: Text(voterRegPollingCentre),
       focusColor: labelColor,
       isExpanded: true,
       value: _newVoter.pollingCentreId,
