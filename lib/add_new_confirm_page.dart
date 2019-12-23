@@ -6,6 +6,7 @@ import 'package:toast/toast.dart';
 import 'constants.dart';
 import 'models/custom_response.dart';
 import 'models/voter.dart';
+import 'models/voter_req.dart';
 
 class AddNewConfirmPage extends StatelessWidget {
   final Voter _voterData;
@@ -109,6 +110,16 @@ class AddNewConfirmPage extends StatelessWidget {
               ),
               onPressed: () {
                 // push data to db
+                // VoterReq voterReqData = VoterReq();
+                // voterReqData.firstName = _voterData.firstName;
+                // voterReqData.lastName = _voterData.lastName;
+                // voterReqData.address = _voterData.address;
+                // voterReqData.email = _voterData.email;
+                // voterReqData.phone = _voterData.phone;
+                // voterReqData.postOfficeId = _voterData.postOfficeId;
+                // voterReqData.pollingCentreId = _voterData.pollingCentreId;
+                // voterReqData.adminUserId = _voterData.adminUserId;
+
                 _addVoter(_voterData).then((resp) {
                   Toast.show(
                       resp.message != null
