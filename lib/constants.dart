@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // API
 const apiUrl = "https://datacollectorbackend.azurewebsites.net";
+// const apiUrl = "https://localhost:44392/";
 
 // Colors
 Color appBgColor = Colors.blue[50];

@@ -18,7 +18,10 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State {
   Voter _newVoter = new Voter();
-  List cityData = [];
+  List districtData = [];
+  List pollingDivisonData = [];
+  List pollingCentreData = [];
+  List postOfficeData = [];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final _addVoterFormKey = GlobalKey<FormState>();
@@ -29,14 +32,46 @@ class _AddNewPageState extends State {
     _adminUserId = int.parse(prefs.getString("user_key"));
   }
 
-  void _getData() async {
+  void _getDistrictData() async {
     try {
-      _getSharedPref();
       // load data from API
       Response resp = await Dio().get("$apiUrl/District");
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
-        cityData.addAll(d.data);
+        districtData.addAll(d.data);
+      });
+    } catch (e) {}
+  }
+
+  void _getPollingDivisionData(districtId) async {
+    try {
+      // load data from API
+      Response resp = await Dio().get("$apiUrl/PollingDivision/" + districtId);
+      setState(() {
+        CustomResponse d = CustomResponse.fromJson(resp.data);
+        pollingDivisonData.addAll(d.data);
+      });
+    } catch (e) {}
+  }
+
+  void _getPollingCentreData(divisonId) async {
+    try {
+      // load data from API
+      Response resp = await Dio().get("$apiUrl/PollingCentre/" + divisonId);
+      setState(() {
+        CustomResponse d = CustomResponse.fromJson(resp.data);
+        pollingCentreData.addAll(d.data);
+      });
+    } catch (e) {}
+  }
+
+  void _getPostOfficeData() async {
+    try {
+      // load data from API
+      Response resp = await Dio().get("$apiUrl/PostOffice/");
+      setState(() {
+        CustomResponse d = CustomResponse.fromJson(resp.data);
+        postOfficeData.addAll(d.data);
       });
     } catch (e) {}
   }
@@ -44,7 +79,9 @@ class _AddNewPageState extends State {
   @override
   initState() {
     super.initState();
-    _getData();
+    _getSharedPref();
+    _getDistrictData();
+    _getPostOfficeData();
   }
 
   @override
@@ -75,8 +112,8 @@ class _AddNewPageState extends State {
       onSaved: (value) => _newVoter.address = value,
     );
 
-    final cityDropdown = DropdownButton(
-      items: cityData
+    final districtDropdown = DropdownButton(
+      items: districtData
           .map((f) => DropdownMenuItem(
                 value: f["id"],
                 child: Text(f["name"]),
@@ -84,51 +121,74 @@ class _AddNewPageState extends State {
           .toList(),
       onChanged: (value) {
         setState(() {
-          _newVoter.cityId = value;
-          var tempCity = cityData.firstWhere((c) => c["id"] == value);
-          _newVoter.cityName = tempCity["name"];
+          _newVoter.districtId = value;
+          var tempDistrict = districtData.firstWhere((c) => c["id"] == value);
+          _newVoter.districtName = tempDistrict["name"];
         });
+        _getPollingDivisionData(value);
       },
       hint: Text(voterRegCity),
       focusColor: labelColor,
       isExpanded: true,
-      value: _newVoter.cityId,
+      value: _newVoter.districtId,
     );
 
-    final postalCodeText = TextFormField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-          labelText: voterRegPostalCode,
-          labelStyle: TextStyle(color: labelColor)),
-      onSaved: (value) => _newVoter.postalCode = value,
+    final postalDropdown = DropdownButton(
+      items: postOfficeData
+          .map((f) => DropdownMenuItem(
+                value: f["id"],
+                child: Text(f["name"] + '/' + f["postalCode"]),
+              ))
+          .toList(),
+      onChanged: (value) {
+        setState(() {
+          _newVoter.postOfficeId = value;
+          var tempPostOffice =
+              postOfficeData.firstWhere((c) => c["id"] == value);
+          _newVoter.postalCode = tempPostOffice["postalCode"];
+        });
+      },
+      hint: Text(voterRegPostalCode),
+      focusColor: labelColor,
+      isExpanded: true,
+      value: _newVoter.postOfficeId,
     );
 
-    // final pollingCentreDropdown = DropdownButton<String>(
-    //   items: _pollingCentreList,
-    //   onChanged: (String value) {
-    //     setState(() {
-    //       _newVoter.pollingCentre = value;
-    //     });
-    //   },
-    //   hint: Text(voterRegPollingCentre),
-    //   isExpanded: true,
-    //   value: _newVoter.pollingCentre,
-    // );
-
-    final pollingDivisionText = TextFormField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-          labelText: voterRegPollingDivision,
-          labelStyle: TextStyle(color: labelColor)),
-      onSaved: (value) => _newVoter.pollingDivision = value,
+    final pollingDivisionDropdown = DropdownButton(
+      items: pollingDivisonData
+          .map((f) => DropdownMenuItem(
+                value: f["id"],
+                child: Text(f["name"]),
+              ))
+          .toList(),
+      onChanged: (value) {
+        setState(() {
+          _newVoter.pollingDivisionId = value;
+          _getPollingCentreData(value);
+        });
+      },
+      hint: Text(voterRegPollingDivision),
+      focusColor: labelColor,
+      isExpanded: true,
+      value: _newVoter.pollingDivisionId,
     );
 
-    final pollingStationText = TextFormField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-          labelText: voterRegPollingCentre,
-          labelStyle: TextStyle(color: labelColor)),
-      onSaved: (value) => _newVoter.pollingCentre = value,
+    final pollingCentreDropdown = DropdownButton(
+      items: pollingCentreData
+          .map((f) => DropdownMenuItem(
+                value: f["id"],
+                child: Text(f["name"]),
+              ))
+          .toList(),
+      onChanged: (value) {
+        setState(() {
+          _newVoter.pollingCentreId = value;
+        });
+      },
+      hint: Text(voterRegPostalCode),
+      focusColor: labelColor,
+      isExpanded: true,
+      value: _newVoter.pollingCentreId,
     );
 
     final phoneText = TextFormField(
@@ -183,10 +243,10 @@ class _AddNewPageState extends State {
             emailText,
             phoneText,
             addressText,
-            cityDropdown,
-            postalCodeText,
-            pollingDivisionText,
-            pollingStationText,
+            districtDropdown,
+            postalDropdown,
+            pollingDivisionDropdown,
+            pollingCentreDropdown,
             SizedBox(height: buttonHeight),
             confirmButton
           ],

@@ -2,11 +2,14 @@ class Voter {
   String firstName;
   String lastName;
   String address;
-  int cityId;
-  String cityName;
+  int districtId;
+  String districtName;
+  int postOfficeId;
   String postalCode;
-  String pollingDivision;
-  String pollingCentre;
+  int pollingDivisionId;
+  String pollingDivisionName;
+  int pollingCentreId;
+  String pollingCentreName;
   String email = '';
   String phone = '';
   int adminUserId;
@@ -18,10 +21,12 @@ class Voter {
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'address': instance.address,
-      'city': instance.cityId.toString(),
+      'districtId': instance.districtId.toString(),
+      'districtName': instance.districtName,
+      'postOfficeId': instance.postOfficeId.toString(),
       'postalCode': instance.postalCode,
-      'pollingDivision': instance.pollingDivision,
-      'pollingCentre': instance.pollingCentre,
+      'pollingDivisionId': instance.pollingDivisionId.toString(),
+      'pollingCentreId': instance.pollingCentreId.toString(),
       'email': instance.email,
       'phone': instance.phone,
       'adminUserId': instance.adminUserId.toString()

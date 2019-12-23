@@ -58,7 +58,7 @@ class AddNewConfirmPage extends StatelessWidget {
                     voterRegCity,
                   ),
                   Text(
-                    _voterData.cityName,
+                    _voterData.districtName,
                   )
                 ]),
                 TableRow(children: <Widget>[
@@ -74,7 +74,7 @@ class AddNewConfirmPage extends StatelessWidget {
                     voterRegPollingDivision,
                   ),
                   Text(
-                    _voterData.pollingDivision,
+                    _voterData.pollingDivisionName,
                   )
                 ]),
                 TableRow(children: <Widget>[
@@ -82,7 +82,7 @@ class AddNewConfirmPage extends StatelessWidget {
                     voterRegPollingCentre,
                   ),
                   Text(
-                    _voterData.pollingCentre,
+                    _voterData.pollingCentreName,
                   )
                 ]),
                 TableRow(children: <Widget>[
