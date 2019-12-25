@@ -13,7 +13,7 @@ Color appBtnSecondColor = Colors.orange[300];
 Color labelColor = Colors.black54;
 
 // Strings
-const appTitle = "මනුස්සකම";
+const appTitle = "Manussakama - මනුස්සකම";
 const usernameHintText = "Email / විද්යුත් තැපැල් ලිපිනය";
 const passwordHintText = "Password / මුර පදය ";
 const fullNameHintText = "Full Name / සම්පූර්ණ නම ";
