@@ -29,7 +29,7 @@ class _AddNewPageState extends State {
 
   void _getSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
-    _adminUserId = int.parse(prefs.getString("user_key"));
+    _adminUserId =3;//int.parse(prefs.getString("user_key"));
   }
 
   void _getDistrictData() async {
