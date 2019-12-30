@@ -3,6 +3,7 @@ class User {
   String password;
   String name;
   int districtId;
+  String districtName;
 
   Map<String, dynamic> toJson() => _itemToJson(this);
 
@@ -11,7 +12,8 @@ class User {
       'name': instance.name,
       'username': instance.username,
       'password': instance.password,
-      'districtId': instance.districtId.toString()
+      'districtId': instance.districtId.toString(),
+      'districtName': instance.districtName
     };
   }
 }

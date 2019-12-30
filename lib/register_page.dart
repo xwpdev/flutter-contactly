@@ -1,4 +1,6 @@
 import 'dart:convert';
+// import 'package:dropdownfield/dropdownfield.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +20,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _regiterUserFormKey = GlobalKey<FormState>();
-  List cityData = [];
+  List districtData = [];
 
   User _newUser = new User();
 
@@ -36,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         CustomResponse d = CustomResponse.fromJson(resp.data);
         // _loadCityData(d.data);
-        cityData.addAll(d.data);
+        districtData.addAll(d.data);
       });
     } catch (e) {}
   }
@@ -96,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     final cityDropdown = DropdownButton(
-      items: cityData
+      items: districtData
           .map((f) => DropdownMenuItem(
                 value: f["id"],
                 child: Text(f["name"]),
@@ -110,6 +112,39 @@ class _RegisterPageState extends State<RegisterPage> {
       hint: Text(voterRegCity),
       isExpanded: true,
       value: _newUser.districtId,
+    );
+
+    // final testDropdown = DropDownField(
+    //     value: _newUser.districtId,
+    //     // required: true,
+    //     // strict: true,
+    //     labelText: voterRegCity,
+    //     // icon: Icon(Icons.account_balance),
+    //     items: districtData.map((f) => Text(f["name"]).data).toList(),
+    //     setter: (dynamic newValue) {
+    //       _newUser.districtId = newValue;
+    //     });
+
+    final testDropdown = SearchableDropdown(
+      items: districtData
+          .map((f) => DropdownMenuItem(
+                value: f["name"],
+                child: Text(f["name"]),
+              ))
+          .toList(),
+      value: _newUser.districtName,
+      hint: new Text(voterRegCity),
+      searchHint: new Text(
+        voterRegCity,
+        style: new TextStyle(fontSize: 20),
+      ),
+      onChanged: (value) {
+        setState(() {
+          _newUser.districtName = value;
+          var tempDistrict = districtData.firstWhere((c) => c["name"] == value);
+          _newUser.districtId = tempDistrict["id"];
+        });
+      },
     );
 
     final registerButton = Padding(
@@ -154,7 +189,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 name,
                 username,
                 password,
-                cityDropdown,
+                // cityDropdown,
+                testDropdown,
                 SizedBox(height: buttonHeight),
                 registerButton
               ],

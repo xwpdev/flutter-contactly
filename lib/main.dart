@@ -27,7 +27,7 @@ class ContactlyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: appBgColor,
       ),
-      home: LoginPage(),
+      home: RegisterPage(),
       routes: _routes,
     );
   }
