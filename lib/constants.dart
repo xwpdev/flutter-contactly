@@ -5,7 +5,7 @@ const apiUrl = "https://datacollectorbackend.azurewebsites.net";
 // const apiUrl = "https://localhost:44392/";
 
 // Colors
-Color appBgColor = Colors.blue[50];
+Color appBgColor = Colors.blue[100];
 Color appBarColor = Colors.blue[800];
 Color appBarTextColor = Colors.white;
 Color appBtnDefaultColor = Colors.blue[300];
@@ -33,6 +33,7 @@ const voterRegCity = "City / නගරය";
 const voterRegPostalCode = "Postal Code / තැපැල් කේතය";
 const voterRegPollingDivision = "Polling Divison / ආසනය";
 const voterRegPollingCentre = "Polling Center / ඡන්ද මධ්‍යස්ථානය";
+const voterRegPollingCentreShort = "Polling Center";
 const voterRegEmail = "Email / විද්යුත් තැපැල් ලිපිනය*";
 const voterRegPhone = "Contact No / දුරකථන අංකය*";
 const voterRegConfirm = "Confirm / තහවුරු කරන්න";

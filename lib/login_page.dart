@@ -69,12 +69,12 @@ class LoginPage extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed(homePageTag);
               } else {
                 Toast.show(resp.message, context,
-                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                    duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
               }
             });
           } else {
             Toast.show("Login Error", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
           }
         },
         padding: EdgeInsets.all(12),

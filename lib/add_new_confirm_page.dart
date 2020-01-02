@@ -6,7 +6,6 @@ import 'package:toast/toast.dart';
 import 'constants.dart';
 import 'models/custom_response.dart';
 import 'models/voter.dart';
-import 'models/voter_req.dart';
 
 class AddNewConfirmPage extends StatelessWidget {
   final Voter _voterData;
@@ -20,6 +19,7 @@ class AddNewConfirmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appBgColor,
       appBar: AppBar(
         title: Text(voterRegConfirm, style: TextStyle(color: appBarTextColor)),
         backgroundColor: appBarColor,

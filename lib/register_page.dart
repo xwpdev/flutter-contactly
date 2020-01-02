@@ -97,35 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
 
-    final cityDropdown = DropdownButton(
-      items: districtData
-          .map((f) => DropdownMenuItem(
-                value: f["id"],
-                child: Text(f["name"]),
-              ))
-          .toList(),
-      onChanged: (value) {
-        setState(() {
-          _newUser.districtId = value;
-        });
-      },
-      hint: Text(voterRegCity),
-      isExpanded: true,
-      value: _newUser.districtId,
-    );
-
-    // final testDropdown = DropDownField(
-    //     value: _newUser.districtId,
-    //     // required: true,
-    //     // strict: true,
-    //     labelText: voterRegCity,
-    //     // icon: Icon(Icons.account_balance),
-    //     items: districtData.map((f) => Text(f["name"]).data).toList(),
-    //     setter: (dynamic newValue) {
-    //       _newUser.districtId = newValue;
-    //     });
-
-    final testDropdown = SearchableDropdown(
+    final districtDropdown = SearchableDropdown(
       items: districtData
           .map((f) => DropdownMenuItem(
                 value: f["name"],
@@ -190,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 username,
                 password,
                 // cityDropdown,
-                testDropdown,
+                districtDropdown,
                 SizedBox(height: buttonHeight),
                 registerButton
               ],

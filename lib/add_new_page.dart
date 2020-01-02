@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
@@ -29,7 +30,7 @@ class _AddNewPageState extends State {
 
   void _getSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
-    _adminUserId =3;//int.parse(prefs.getString("user_key"));
+    _adminUserId = int.parse(prefs.getString("user_key"));
   }
 
   void _getDistrictData() async {
@@ -123,27 +124,43 @@ class _AddNewPageState extends State {
       onSaved: (value) => _newVoter.address = value,
     );
 
-    final districtDropdown = DropdownButton(
+    final districtDropdown = SearchableDropdown(
       items: districtData
           .map((f) => DropdownMenuItem(
-                value: f["id"],
+                value: f["name"],
                 child: Text(f["name"]),
               ))
           .toList(),
-      onChanged: (value) => _onSelectedState(value),
-      hint: Text(voterRegCity),
-      focusColor: labelColor,
-      isExpanded: true,
-      value: _newVoter.districtId,
+      value: _newVoter.districtName,
+      hint: new Text(voterRegCity),
+      searchHint: new Text(
+        voterRegCity,
+        style: new TextStyle(fontSize: 20),
+      ),
+      onChanged: (value) {
+        setState(() {
+          _newVoter.districtName = value;
+          var tempDistrict = districtData.firstWhere((c) => c["name"] == value);
+          _newVoter.districtId = tempDistrict["id"];
+
+          _getPollingDivisionData(_newVoter.districtId);
+        });
+      },
     );
 
-    final postalDropdown = DropdownButton(
+    final postalDropdown = SearchableDropdown(
       items: postOfficeData
           .map((f) => DropdownMenuItem(
-                value: f["id"],
+                value: f["name"],
                 child: Text(f["name"] + ' / ' + f["postalCode"]),
               ))
           .toList(),
+      value: _newVoter.postalCode,
+      hint: new Text(voterRegPostalCode),
+      searchHint: new Text(
+        voterRegPostalCode,
+        style: new TextStyle(fontSize: 20),
+      ),
       onChanged: (value) {
         setState(() {
           _newVoter.postOfficeId = value;
@@ -152,53 +169,53 @@ class _AddNewPageState extends State {
           _newVoter.postalCode = tempPostOffice["postalCode"];
         });
       },
-      hint: Text(voterRegPostalCode),
-      focusColor: labelColor,
-      isExpanded: true,
-      value: _newVoter.postOfficeId,
     );
 
-    final pollingDivisionDropdown = DropdownButton(
+    final pollingDivisionDropdown = SearchableDropdown(
       items: pollingDivisonData
           .map((f) => DropdownMenuItem(
-                value: f["id"],
+                value: f["name"],
                 child: Text(f["name"]),
               ))
           .toList(),
+      value: _newVoter.pollingDivisionName,
+      hint: new Text(voterRegPollingDivision),
+      searchHint: new Text(
+        voterRegPollingDivision,
+        style: new TextStyle(fontSize: 20),
+      ),
       onChanged: (value) {
         setState(() {
-          _newVoter.pollingDivisionId = value;
+          _newVoter.pollingDivisionName = value;
           var tempPollingDivision =
-              pollingDivisonData.firstWhere((c) => c["id"] == value);
-          _newVoter.pollingDivisionName = tempPollingDivision["name"];
-          _getPollingCentreData(value);
+              pollingDivisonData.firstWhere((c) => c["name"] == value);
+          _newVoter.pollingDivisionId = tempPollingDivision["id"];
+          _getPollingCentreData(_newVoter.pollingDivisionId);
         });
       },
-      hint: Text(voterRegPollingDivision),
-      focusColor: labelColor,
-      isExpanded: true,
-      value: _newVoter.pollingDivisionId,
     );
 
-    final pollingCentreDropdown = DropdownButton(
+    final pollingCentreDropdown = SearchableDropdown(
       items: pollingCentreData
           .map((f) => DropdownMenuItem(
-                value: f["id"],
+                value: f["name"],
                 child: Text(f["name"]),
               ))
           .toList(),
+      value: _newVoter.pollingCentreName,
+      hint: new Text(voterRegPollingCentre),
+      searchHint: new Text(
+        voterRegPollingCentre,
+        style: new TextStyle(fontSize: 20),
+      ),
       onChanged: (value) {
         setState(() {
-          _newVoter.pollingCentreId = value;
+          _newVoter.pollingCentreName = value;
           var tempPollingCentre =
-              pollingCentreData.firstWhere((c) => c["id"] == value);
-          _newVoter.pollingCentreName = tempPollingCentre["name"];
+              pollingCentreData.firstWhere((c) => c["name"] == value);
+          _newVoter.pollingCentreId = tempPollingCentre["id"];
         });
       },
-      hint: Text(voterRegPollingCentre),
-      focusColor: labelColor,
-      isExpanded: true,
-      value: _newVoter.pollingCentreId,
     );
 
     final phoneText = TextFormField(
@@ -237,6 +254,7 @@ class _AddNewPageState extends State {
     );
 
     return Scaffold(
+      backgroundColor: appBgColor,
       key: scaffoldKey,
       appBar: AppBar(
         title: Text(addNewTitleText, style: TextStyle(color: appBarTextColor)),
