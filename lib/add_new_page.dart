@@ -87,15 +87,6 @@ class _AddNewPageState extends State {
     _getPostOfficeData();
   }
 
-  void _onSelectedState(value) {
-    _getPollingDivisionData(value);
-    setState(() {
-      _newVoter.districtId = value;
-      var tempDistrict = districtData.firstWhere((c) => c["id"] == value);
-      _newVoter.districtName = tempDistrict["name"];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _newVoter.adminUserId = _adminUserId;

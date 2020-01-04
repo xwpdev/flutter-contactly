@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:VoterRegister/models/user.dart';
+//import 'package:VoterRegister/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
@@ -8,8 +8,10 @@ import 'package:toast/toast.dart';
 
 import './constants.dart';
 import 'models/custom_response.dart';
+import 'models/user.dart';
 
 class LoginPage extends StatelessWidget {
+  // bool _loading;
   final _userNameInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
 
@@ -17,6 +19,12 @@ class LoginPage extends StatelessWidget {
     var resp = await Dio().post("$apiUrl/Login", data: json.encode(userData));
     return CustomResponse.fromJson(resp.data);
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _loading = false;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +118,13 @@ class LoginPage extends StatelessWidget {
             username,
             password,
             SizedBox(height: buttonHeight),
+            // Center(
+            //     child: Container(
+            //   padding: EdgeInsets.all(16.0),
+            //   child: _loading
+            //       ? LinearProgressIndicator()
+            //       : Text("Press button to download"),
+            // )),
             loginButton,
             registerButton
           ],
