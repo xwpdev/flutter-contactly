@@ -1,30 +1,32 @@
 import 'dart:convert';
 
-//import 'package:VoterRegister/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:toast/toast.dart';
+import 'package:loading/loading.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
 
 import './constants.dart';
 import 'models/custom_response.dart';
 import 'models/user.dart';
 
-class LoginPage extends StatelessWidget {
-  // bool _loading;
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _loading = false;
+
   final _userNameInputController = TextEditingController();
+
   final _passwordInputController = TextEditingController();
 
   _loginUser(userData) async {
     var resp = await Dio().post("$apiUrl/Login", data: json.encode(userData));
     return CustomResponse.fromJson(resp.data);
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _loading = false;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +70,17 @@ class LoginPage extends StatelessWidget {
           if (username.controller.text != "" &&
               password.controller.text != "") {
             var tempUser = new User();
+
+            setState(() {
+              _loading = true;
+            });
+
             tempUser.username = username.controller.text;
             tempUser.password = password.controller.text;
-
             _loginUser(tempUser).then((resp) {
+              setState(() {
+                _loading = false;
+              });
               if (resp.code == 100) {
                 _savePref(resp.data.toString(), "user_key");
                 Navigator.of(context).pushReplacementNamed(homePageTag);
@@ -107,30 +116,28 @@ class LoginPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: appBgColor,
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            logo,
-            SizedBox(height: bigRadius),
-            username,
-            password,
-            SizedBox(height: buttonHeight),
-            // Center(
-            //     child: Container(
-            //   padding: EdgeInsets.all(16.0),
-            //   child: _loading
-            //       ? LinearProgressIndicator()
-            //       : Text("Press button to download"),
-            // )),
-            loginButton,
-            registerButton
-          ],
-        ),
-      ),
-    );
+        backgroundColor: appBgColor,
+        body: _loading
+            ? Center(
+                child: Loading(
+                    indicator: BallPulseIndicator(),
+                    size: 80.0,
+                    color: appBtnDefaultColor))
+            : Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                  children: <Widget>[
+                    logo,
+                    SizedBox(height: bigRadius),
+                    username,
+                    password,
+                    SizedBox(height: buttonHeight),
+                    loginButton,
+                    registerButton
+                  ],
+                ),
+              ));
   }
 
   void _savePref(String username, String userKey) async {

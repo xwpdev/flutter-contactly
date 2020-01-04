@@ -11,7 +11,7 @@ description: A Voter Registration App for Sri Lanka
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.1+11
+version: 1.2.0+10
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -33,6 +33,7 @@ dev_dependencies:
   dio: 3.0.3
   rxdart: 0.22.3
   toast: ^0.1.5
+  loading: ^1.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
