@@ -146,7 +146,7 @@ class _AddNewPageState extends State {
                 child: Text(f["name"] + ' / ' + f["postalCode"]),
               ))
           .toList(),
-      value: _newVoter.postalCode,
+      value: _newVoter.postOfficeName,
       hint: new Text(voterRegPostalCode),
       searchHint: new Text(
         voterRegPostalCode,
@@ -154,10 +154,11 @@ class _AddNewPageState extends State {
       ),
       onChanged: (value) {
         setState(() {
-          _newVoter.postOfficeId = value;
+          _newVoter.postOfficeName = value;
           var tempPostOffice =
-              postOfficeData.firstWhere((c) => c["id"] == value);
+              postOfficeData.firstWhere((c) => c["name"] == value);
           _newVoter.postalCode = tempPostOffice["postalCode"];
+          _newVoter.postOfficeId = tempPostOffice["id"];
         });
       },
     );

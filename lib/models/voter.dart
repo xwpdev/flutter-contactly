@@ -6,6 +6,7 @@ class Voter {
   String districtName;
   int postOfficeId;
   String postalCode;
+  String postOfficeName;
   int pollingDivisionId;
   String pollingDivisionName;
   int pollingCentreId;
