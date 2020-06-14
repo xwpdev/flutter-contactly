@@ -6,6 +6,7 @@ const apiUrl = "https://datacollectorbackend.azurewebsites.net";
 
 // Colors
 Color appBgColor = Colors.blue[100];
+Color appBgLoginColor = Colors.white;
 Color appBarColor = Colors.blue[800];
 Color appBarTextColor = Colors.white;
 Color appBtnDefaultColor = Colors.blue[300];
@@ -44,6 +45,7 @@ Image appLogo = Image.asset("assets/logo.png");
 
 // Sizes
 const bigRadius = 72.0;
+const bigLoginRadius = 80.0;
 const buttonHeight = 24.0;
 
 // Pages

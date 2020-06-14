@@ -31,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final logo = CircleAvatar(
-      backgroundColor: Colors.lime[50],
-      radius: bigRadius,
+      backgroundColor: Colors.lightBlue[50],
+      radius: bigLoginRadius,
       child: appLogo,
     );
 
